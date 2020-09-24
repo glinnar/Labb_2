@@ -46,11 +46,26 @@ public class Playerlist {
 
 
     }
+    // Hämta existenande element i första listan och lägga till i nya listan.
 
     private int getStriker(String strikerName) {
         for (int i = 0; i < this.strikers.size(); i++) {
             Striker striker = this.strikers.get(i);
             if (striker.getName().equals(strikerName)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private int getFAvStriker(Striker favstriker) {
+        return this.favStrikers.indexOf(favstriker);
+    }
+
+    private int getFavStriker(String strikerName) {
+        for (int i = 0; i < this.favStrikers.size(); i++) {
+            Striker favStriker = this.favStrikers.get(i);
+            if (favStriker.getName().equals(strikerName)) {
                 return i;
             }
         }
@@ -68,6 +83,19 @@ public class Playerlist {
             return false;
         }
         this.strikers.set(listPosition, upDatedStriker);
+
+        System.out.println(striker.getName() + ", har uppdaterats till " + upDatedStriker.getName());
+        return true;
+
+    }
+    public boolean updateFavStriker(Striker striker, Striker upDatedStriker) {
+
+        int favlistPosition = getFAvStriker(striker);
+        if (favlistPosition < 0) {
+            System.out.println(striker.getName() + ",finns inte i listan");
+            return false;
+        }
+        this.favStrikers.set(favlistPosition,upDatedStriker);
         System.out.println(striker.getName() + ", har uppdaterats till " + upDatedStriker.getName());
         return true;
 
@@ -101,8 +129,27 @@ public class Playerlist {
         return null;
     }
 
+    public String searchFavStriker(Striker striker) {
+        if (getStriker(striker) >= 0) {
+            return striker.getName();
+        }
+        return null;
+    }
+
+    public Striker searchFavStriker(String strikerName) {
+        int listPosition = getFavStriker(strikerName);
+        if (listPosition >= 0) {
+            return this.favStrikers.get(listPosition);
+        }
+        return null;
+    }
+
+
 
     public void printFavourite() {
+
+      //  int compareStrikers = Collections.sort(favStrikers,striker.getRating()));
+
         System.out.println("FAVORITSPELARE ______");
         System.out.println(" Namn " + " | " + " Land" + " | " + " KLubb " + " | "
                 + " Position " + " | " + " Rating " + " | " + " Bästa fot ");
@@ -126,7 +173,20 @@ public class Playerlist {
 
     }
 
+    public boolean addFavouiteStriker(Striker striker){
+        if (getStriker(striker.getName()) >= 0) {
+            System.out.println("Spelaren finns redan i listan");
+            return false;
+        }
+        favStrikers.add(striker);
+        return true;
+
+
+    }
+
 
 }
+
+
 
 

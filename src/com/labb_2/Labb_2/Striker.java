@@ -11,15 +11,6 @@ public class Striker extends Player {
         this.bestFoot = bestFoot;
     }
 
-    public Striker(String teamName){
-        super(teamName);
-
-    }
-
-    public Striker(int rating) {
-        super();
-    }
-
 
     public int getRating() {
         return rating;
@@ -37,11 +28,10 @@ public class Striker extends Player {
         this.bestFoot = bestFoot;
     }
 
-    public static Striker createStriker(String name, String country, String teamName, String position, int rating, String bestFoot){
-        return new Striker(name,country,teamName,position,rating,bestFoot);
+    public static Striker createStriker(String name, String country, String teamName, String position, int rating, String bestFoot) {
+        return new Striker(name, country, teamName, position, rating, bestFoot);
     }
 
-    public static Striker upDateRating(int rating){
-        return new Striker(rating);
-    }
+
+
 }

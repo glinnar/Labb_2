@@ -18,9 +18,7 @@ public class Player {
         this.teamName = teamName;
     }
 
-    public Player() {
 
-    }
 
 
     public String getName() {
