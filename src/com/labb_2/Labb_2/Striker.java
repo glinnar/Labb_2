@@ -32,5 +32,11 @@ public class Striker extends Player {
         return new Striker(name, country, teamName, position, rating, bestFoot);
     }
 
-
+    @Override
+    public String toString() {
+        return "Striker{" +
+                "rating=" + rating +
+                ", bestFoot='" + bestFoot + '\'' +
+                '}';
+    }
 }

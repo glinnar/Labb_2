@@ -72,6 +72,8 @@ public class Main {
                     
                      */
 
+                    myFavStrikerList.SortStriker();
+
                     break;
 
 

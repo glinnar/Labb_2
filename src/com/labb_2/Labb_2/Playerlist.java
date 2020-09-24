@@ -1,6 +1,7 @@
 package com.labb_2.Labb_2;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 
 public class Playerlist {
@@ -113,6 +114,8 @@ public class Playerlist {
         return true;
     }
 
+    //SORTERING HÄR
+
 
     public String searchStriker(Striker striker) {
         if (getStriker(striker) >= 0) {
@@ -146,7 +149,7 @@ public class Playerlist {
     static final Comparator<Striker> RATING_ORDER = new Comparator<Striker>() {
         @Override
         public int compare(Striker o1, Striker o2) {
-            return o1.getRating() - o2.getRating();
+            return o2.getRating() - o1.getRating();
         }
     };
 
@@ -190,13 +193,13 @@ public class Playerlist {
 
     }
 
-
-
-
-    @Override
-    public String toString() {
-        return String.valueOf(favStrikers);
+    public void SortStriker(){
+        Collections.sort(favStrikers,RATING_ORDER);
+        printFavourite();
     }
+
+
+
 
 }
 
