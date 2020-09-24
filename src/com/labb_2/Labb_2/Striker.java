@@ -33,5 +33,4 @@ public class Striker extends Player {
     }
 
 
-
 }

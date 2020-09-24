@@ -12,6 +12,7 @@ public class Main {
 
         boolean listON = false;
         int coice;
+        int val;
         while (!listON) {
             System.out.println("Hej vänligen skriv in ett val:");
             coice = scanner.nextInt();
@@ -23,18 +24,19 @@ public class Main {
                     break;
 
                 case 2:
-                    // System.out.println("Vänligen skriv in uppgifterna");
+                     System.out.println("Vänligen skriv in uppgifterna");
                     addNewStriker();
-
-                    /*
-                    int val = scanner.nextInt();
+                    strikerList.listStriker();
                     System.out.println("Vill du även spara spelaren i din favoritlista?");
+                    System.out.println("1. Ja");
+                    System.out.println("2. Nej");
+
+                    val = scanner.nextInt();
                     if(val == 1){
-                        addFavouriteStriker();
+                        addNewFavouriteStriker();
                     } else if(val == 2){
-                        addNewStriker();
                         System.out.println("Spelaren sparas inte i favoritlistan");
-                    }*/
+                    }
                     break;
 
                 case 3:
@@ -64,6 +66,11 @@ public class Main {
 
                 case 7:
 
+                    /*
+                    Collections.sort(myFavStrikerList,Playerlist.RATING_ORDER);
+                    printList(myFavStrikerList);
+                    
+                     */
 
                     break;
 
@@ -81,7 +88,7 @@ public class Main {
     private static void addNewStriker() {
         System.out.print("Skriv in namnet på anfallaren: ");
         String strikerName = scanner.nextLine();
-        System.out.print("Skriv in vilket land anfallaren komemr ifrån: ");
+        System.out.print("Skriv in vilket land spelaren kommer ifrån: ");
         String countryName = scanner.nextLine();
         System.out.print("Skriv in vilket klubb som spelaren tillhör: ");
         String teamName = scanner.nextLine();
@@ -92,7 +99,7 @@ public class Main {
             rating = 1;
         }
 
-        System.out.print("Vilken fot är spelarens bästa?: ");
+        System.out.print("Skriv in vilken fot som är spelarens bästa: ");
         String bestFoot = scanner.nextLine();
 
         Striker newStriker = new Striker(strikerName, countryName, teamName, position, rating, bestFoot);
@@ -139,14 +146,11 @@ public class Main {
         Striker listStriker = strikerList.searchStriker(strikerName);
         Striker listfavStriker = myFavStrikerList.searchFavStriker(strikerName);
         // Fixa uppdatering på favstriker.
-        if (listStriker == null && listfavStriker == null) {
+        if (listStriker == null) {
             System.out.println("Anfallaren finns inte.");
             return;
-        } else if (listStriker == null) {
-            System.out.println("Anfallaren finns inte.");
-            return;
-
         }
+
 
         System.out.println("Välj vad som skall uppdateras");
         System.out.println("1. Uppdatera Klubb");
@@ -157,18 +161,19 @@ public class Main {
 
         switch (updateChoice) {
             case 1:
+
                 System.out.println("Skriv in ny klubb för spelaren");
                 String newTeamName = scanner.nextLine();
                 Striker updatedStrikerTeam = Striker.createStriker(listStriker.getName(), listStriker.getCountry(), newTeamName,
                         listStriker.getPosition(), listStriker.getRating(), listStriker.getBestFoot());
                 // Fixa resterande 2 metoderna som man skall uppdatera
-                Striker updatedFavStrikerTeam = Striker.createStriker(listfavStriker.getName(), listfavStriker.getCountry(), newTeamName,
-                        listfavStriker.getPosition(), listfavStriker.getRating(), listfavStriker.getBestFoot());
+                if (listfavStriker != null) {
+                    Striker updatedFavStrikerTeam = Striker.createStriker(listfavStriker.getName(), listfavStriker.getCountry(), newTeamName,
+                            listfavStriker.getPosition(), listfavStriker.getRating(), listfavStriker.getBestFoot());
+                    myFavStrikerList.updateFavStriker(listfavStriker, updatedFavStrikerTeam);
+                }
 
-                if (strikerList.updateStriker(listStriker, updatedStrikerTeam) && myFavStrikerList.updateFavStriker(listfavStriker, updatedFavStrikerTeam)) {
-                    System.out.println("Informationen är uppdaterad");
-
-                } else if (strikerList.updateStriker(listStriker, updatedStrikerTeam)) {
+                if ((strikerList.updateStriker(listStriker, updatedStrikerTeam))) {
                     System.out.println("Informationen är uppdaterad");
 
                 } else {
@@ -184,6 +189,13 @@ public class Main {
                 int newRating = (int) (Math.random() * 100);
                 Striker updatedStrikerRating = Striker.createStriker(listStriker.getName(), listStriker.getCountry(), listStriker.getTeamName(),
                         listStriker.getPosition(), newRating, listStriker.getBestFoot());
+
+                if (listfavStriker != null) {
+                    Striker updatedFavStrikerRating = Striker.createStriker(listfavStriker.getName(), listfavStriker.getCountry(), listfavStriker.getTeamName(),
+                            listfavStriker.getPosition(), newRating, listfavStriker.getBestFoot());
+                    myFavStrikerList.updateFavStriker(listfavStriker, updatedFavStrikerRating);
+                }
+
                 if (strikerList.updateStriker(listStriker, updatedStrikerRating)) {
                     System.out.println("Spelarens rating  är uppdaterad");
                 } else {
@@ -196,6 +208,12 @@ public class Main {
                 String newCountry = scanner.nextLine();
                 Striker updatedStrikerCountry = Striker.createStriker(listStriker.getName(), newCountry, listStriker.getTeamName(),
                         listStriker.getPosition(), listStriker.getRating(), listStriker.getBestFoot());
+
+                if (listfavStriker != null) {
+                    Striker updatedFavStrikerCountry = Striker.createStriker(listfavStriker.getName(), newCountry, listfavStriker.getTeamName(),
+                            listfavStriker.getPosition(), listfavStriker.getRating(), listfavStriker.getBestFoot());
+                    myFavStrikerList.updateFavStriker(listfavStriker, updatedFavStrikerCountry);
+                }
                 if (strikerList.updateStriker(listStriker, updatedStrikerCountry)) {
                     System.out.println("Spelarens rating  är uppdaterad");
                 } else {
@@ -208,4 +226,7 @@ public class Main {
 
 
     }
+
+
+
 }

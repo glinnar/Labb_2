@@ -1,6 +1,7 @@
 package com.labb_2.Labb_2;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Playerlist {
     private ArrayList<Striker> strikers;
@@ -84,7 +85,7 @@ public class Playerlist {
         }
         this.strikers.set(listPosition, upDatedStriker);
 
-        System.out.println(striker.getName() + ", har uppdaterats till " + upDatedStriker.getName());
+        System.out.println(striker.getName() + ", har uppdaterats");
         return true;
 
     }
@@ -96,7 +97,6 @@ public class Playerlist {
             return false;
         }
         this.favStrikers.set(favlistPosition,upDatedStriker);
-        System.out.println(striker.getName() + ", har uppdaterats till " + upDatedStriker.getName());
         return true;
 
     }
@@ -143,12 +143,18 @@ public class Playerlist {
         }
         return null;
     }
+    static final Comparator<Striker> RATING_ORDER = new Comparator<Striker>() {
+        @Override
+        public int compare(Striker o1, Striker o2) {
+            return o1.getRating() - o2.getRating();
+        }
+    };
+
 
 
 
     public void printFavourite() {
 
-      //  int compareStrikers = Collections.sort(favStrikers,striker.getRating()));
 
         System.out.println("FAVORITSPELARE ______");
         System.out.println(" Namn " + " | " + " Land" + " | " + " KLubb " + " | "
@@ -184,6 +190,13 @@ public class Playerlist {
 
     }
 
+
+
+
+    @Override
+    public String toString() {
+        return String.valueOf(favStrikers);
+    }
 
 }
 
