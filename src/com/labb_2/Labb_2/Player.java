@@ -14,11 +14,9 @@ public class Player {
         this.position = position;
     }
 
-    public Player(String teamName){
+    public Player(String teamName) {
         this.teamName = teamName;
     }
-
-
 
 
     public String getName() {
