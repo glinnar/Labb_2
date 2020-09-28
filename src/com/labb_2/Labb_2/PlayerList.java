@@ -4,14 +4,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class Playerlist {
+public class PlayerList {
     private ArrayList<Striker> strikers;
     private ArrayList<Striker> favStrikers;
 
-    public Playerlist() {
+    public PlayerList() {
         this.strikers = new ArrayList<>();
         this.favStrikers = new ArrayList<>();
     }
+    // Skriver ut den vanliga listan.
 
     public void listStriker() {
         System.out.println("ANFALLARE ______");
@@ -37,6 +38,7 @@ public class Playerlist {
 
 
     }
+    // Lägger till en spelare i den vanliga listan.
 
     public boolean addStriker(Striker striker) {
         if (getStriker(striker.getName()) >= 0) {
@@ -48,7 +50,21 @@ public class Playerlist {
 
 
     }
-    // Hämta existenande element i första listan och lägga till i nya listan.
+     // Lägger till en spelare i favoritlistan.
+    public boolean addFavouriteStriker(Striker striker) {
+        if (getStriker(striker.getName()) >= 0) {
+            System.out.println("Spelaren finns redan i listan");
+            return false;
+        }
+        favStrikers.add(striker);
+        return true;
+
+
+    }
+    // Returnerar index platsen på objektet som skickas in i den vanliga listan.
+    private int getStriker(Striker striker) {
+        return this.strikers.indexOf(striker);
+    }
 
     private int getStriker(String strikerName) {
         for (int i = 0; i < this.strikers.size(); i++) {
@@ -59,8 +75,8 @@ public class Playerlist {
         }
         return -1;
     }
-
-    private int getFAvStriker(Striker favstriker) {
+    // Returnerar index på objektet i favorit listan.
+    private int getFavStriker(Striker favstriker) {
         return this.favStrikers.indexOf(favstriker);
     }
 
@@ -74,9 +90,6 @@ public class Playerlist {
         return -1;
     }
 
-    private int getStriker(Striker striker) {
-        return this.strikers.indexOf(striker);
-    }
 
     public boolean updateStriker(Striker striker, Striker upDatedStriker) {
         int listPosition = getStriker(striker);
@@ -93,7 +106,7 @@ public class Playerlist {
 
     public boolean updateFavStriker(Striker striker, Striker upDatedStriker) {
 
-        int favlistPosition = getFAvStriker(striker);
+        int favlistPosition = getFavStriker(striker);
         if (favlistPosition < 0) {
             System.out.println(striker.getName() + ",finns inte i listan");
             return false;
@@ -116,34 +129,19 @@ public class Playerlist {
     }
 
     public boolean removeFavStriker(Striker favstriker) {
-        int listPosition = getFAvStriker(favstriker);
+        int listPosition = getFavStriker(favstriker);
         if (listPosition < 0) {
             System.out.println(favstriker.getName() + " finns inte i listan");
             return false;
         }
         this.favStrikers.remove(listPosition);
-        return true;
-    }
+        return true;    }
 
-
-    public String searchStriker(Striker striker) {
-        if (getStriker(striker) >= 0) {
-            return striker.getName();
-        }
-        return null;
-    }
 
     public Striker searchStriker(String strikerName) {
         int listPosition = getStriker(strikerName);
         if (listPosition >= 0) {
             return this.strikers.get(listPosition);
-        }
-        return null;
-    }
-
-    public String searchFavStriker(Striker striker) {
-        if (getStriker(striker) >= 0) {
-            return striker.getName();
         }
         return null;
     }
@@ -155,13 +153,19 @@ public class Playerlist {
         }
         return null;
     }
-
+    // Implementerar Comparator interface för sortering av favoritlistan
     static final Comparator<Striker> favStrikerSorting = new Comparator<Striker>() {
         @Override
         public int compare(Striker favStriker1, Striker favStriker2) {
             return favStriker2.getRating() - favStriker1.getRating();
         }
     };
+
+    public void sortFavourite() {
+        Collections.sort(favStrikers, favStrikerSorting);
+        printFavourite();
+    }
+
 
 
     public void printFavourite() {
@@ -190,21 +194,6 @@ public class Playerlist {
 
     }
 
-    public boolean addFavouriteStriker(Striker striker) {
-        if (getStriker(striker.getName()) >= 0) {
-            System.out.println("Spelaren finns redan i listan");
-            return false;
-        }
-        favStrikers.add(striker);
-        return true;
-
-
-    }
-
-    public void sortFavourite() {
-        Collections.sort(favStrikers, favStrikerSorting);
-        printFavourite();
-    }
 
 
 }

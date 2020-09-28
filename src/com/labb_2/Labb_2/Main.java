@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 public class Main {
     private static Scanner scanner = new Scanner(System.in);
-    private static Playerlist strikerList = new Playerlist();
-    private static Playerlist myFavStrikerList = new Playerlist();
+    private static PlayerList strikerList = new PlayerList();
+    private static PlayerList myFavStrikerList = new PlayerList();
 
     public static void main(String[] args) {
 
@@ -23,7 +23,7 @@ public class Main {
                     break;
 
                 case 2:
-                    System.out.println("Vänligen skriv in uppgifterna");
+                    System.out.println("Lägg till ny spelare.");
                     addNewStriker();
                     strikerList.listStriker();
                     break;
@@ -59,7 +59,7 @@ public class Main {
 
                 case 8:
                     System.out.println("Tar bort spelare ur favoritlistan.");
-                    removieFavourite();
+                    removeFavourite();
                     break;
 
                 case 9:
@@ -84,7 +84,7 @@ public class Main {
         String countryName = scanner.nextLine();
         System.out.print("Skriv in vilket klubb som spelaren tillhör: ");
         String teamName = scanner.nextLine();
-        System.out.print("Skriv in vilken position spelare har: ");
+        System.out.print("Skriv in vilken position spelaren har: ");
         String position = scanner.nextLine();
         int rating = (int) (Math.random() * 100);
         if (rating == 0) {
@@ -153,6 +153,7 @@ public class Main {
                 Striker updatedStrikerTeam = Striker.createStriker(listStriker.getName(), listStriker.getCountry(), newTeamName,
                         listStriker.getPosition(), listStriker.getRating(), listStriker.getBestFoot());
 
+                // Om favoritlistan inte är tom så uppdateras även spelaren i denna lista.
                 if (listfavStriker != null) {
                     Striker updatedFavStrikerTeam = Striker.createStriker(listfavStriker.getName(), listfavStriker.getCountry(), newTeamName,
                             listfavStriker.getPosition(), listfavStriker.getRating(), listfavStriker.getBestFoot());
@@ -220,6 +221,7 @@ public class Main {
             System.out.println("Spelaren finns inte.");
             return;
         }
+        // Om spelaren finns i favoritlistan så tas den även bort från den listan.
         if (favStrikerInList != null) {
             myFavStrikerList.removeFavStriker(favStrikerInList);
         }
@@ -232,7 +234,7 @@ public class Main {
 
     }
 
-    private static void removieFavourite(){
+    private static void removeFavourite(){
         System.out.println("Skriv vilken spelare som du vill ta bort.");
         String strikerName = scanner.nextLine();
         Striker favStrikerInList = myFavStrikerList.searchFavStriker(strikerName);
@@ -268,8 +270,8 @@ public class Main {
 
     private static void showMenu() {
         System.out.println("Gör ett val:");
-        System.out.println("1.Visa spelarlista." +
-                " \n2.Lägg till ny spelare. " +
+        System.out.println("1.Visa spelarlista. " +
+                "\n2.Lägg till ny spelare. " +
                 "\n3.Uppdatera spelare." +
                 "\n4.Tar bort spelare. " +
                 "\n5.Sök efter spelare." +
