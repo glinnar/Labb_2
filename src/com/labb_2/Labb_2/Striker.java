@@ -1,8 +1,12 @@
 package com.labb_2.Labb_2;
 
-public class Striker extends Player {
+import java.io.Serializable;
+
+public class Striker extends Player implements Serializable {
     private int rating;
     private String bestFoot;
+
+
 
 
     public Striker(String name, String country, String teamName, String position, int rating, String bestFoot) {

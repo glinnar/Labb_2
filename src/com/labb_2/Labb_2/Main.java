@@ -1,13 +1,16 @@
 package com.labb_2.Labb_2;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
     private static Scanner scanner = new Scanner(System.in);
     private static PlayerList strikerList = new PlayerList();
     private static PlayerList myFavStrikerList = new PlayerList();
+    private static WriteToFile fileWriter = new WriteToFile();
+    private static ReadFromFile fileReader = new ReadFromFile();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
 
 
         boolean listON = false;
@@ -19,12 +22,19 @@ public class Main {
             switch (coice) {
                 case 1:
 
-                    strikerList.listStriker();
+                        fileReader.readFromFile();
+                    //printFromFile();
+
+
+
                     break;
 
                 case 2:
                     System.out.println("Lägg till ny spelare.");
                     addNewStriker();
+                    fileWriter.createFile();
+                    fileWriter.writeDataToFile(strikerList);
+
                     strikerList.listStriker();
                     break;
 
@@ -77,7 +87,7 @@ public class Main {
 
     }
 
-    private static void addNewStriker() {
+    private static void addNewStriker() throws IOException, ClassNotFoundException {
         System.out.print("Skriv in namnet på anfallaren: ");
         String strikerName = scanner.nextLine();
         System.out.print("Skriv in vilket land spelaren kommer ifrån: ");
@@ -95,8 +105,6 @@ public class Main {
         String bestFoot = scanner.nextLine();
 
         Striker newStriker = new Striker(strikerName, countryName, teamName, position, rating, bestFoot);
-
-
         if (strikerList.addStriker(newStriker)) {
             System.out.println("Ny anfallare tillagd: Namn: " + strikerName + "| " +
                     "land: " + countryName + "| " + "Klubb: " + teamName +
@@ -234,7 +242,7 @@ public class Main {
 
     }
 
-    private static void removeFavourite(){
+    private static void removeFavourite() {
         System.out.println("Skriv vilken spelare som du vill ta bort.");
         String strikerName = scanner.nextLine();
         Striker favStrikerInList = myFavStrikerList.searchFavStriker(strikerName);

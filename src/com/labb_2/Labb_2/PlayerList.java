@@ -1,17 +1,21 @@
 package com.labb_2.Labb_2;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class PlayerList {
+public class PlayerList implements Serializable {
     private ArrayList<Striker> strikers;
     private ArrayList<Striker> favStrikers;
+
+
 
     public PlayerList() {
         this.strikers = new ArrayList<>();
         this.favStrikers = new ArrayList<>();
     }
+
     // Skriver ut den vanliga listan.
 
     public void listStriker() {
@@ -193,6 +197,8 @@ public class PlayerList {
 
 
     }
+
+
 
 
 

@@ -1,10 +1,16 @@
 package com.labb_2.Labb_2;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable {
     private String name;
     private String country;
     private String teamName;
     private String position;
+
+    public Player(){
+
+    }
 
 
     public Player(String name, String country, String teamName, String position) {
